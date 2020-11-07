@@ -9,19 +9,36 @@
 {% block title%} Homepage {% endblock%}
 
 {% block content %}
-	<div class="container">
-		<div style="margin-top: 60px;" class="row">
-			<div class="col s12 m6">
+	<section style="background-color:hsla(100,60%,20%,0.5);" class="section">
+		<div style="margin-top: 10px;" class="row">
+			<div class="col s12">
 				<div class="box-element">
-					<div class="white-text">
-						<h5>Welcome to</h5>
+					<div class="white-text center">
+						<h4>Welcome to</h4>
+						<i class="material-icons">local_library</i>
 						<h5>Public Library</h5>
 					</div>
 					<hr>
-					<h6 style="color: #d1bf8c;">Find your favorite book here....</h6>
-					<button style="margin-top: 10px;"class="btn">Get Started</button>	
 				</div>		
 			</div>
+
+			<div class="col s12">
+				<h3 class="center">Available Books</h3>
+				<div style="font-weight: 700;">
+					<ul class="collection">
+						{% for book in books %}
+						<li style="background-color:inherit;" class="collection-item avatar">
+					      <i class="material-icons circle">book</i>
+					      <span class="title">Title: {{book.title}}</span>
+					      <p>Author: {{book.author}}<br>
+					         Category: {{book.categories}}
+					      </p>
+					      <a href="#!" class="secondary-content btn-floating"><i style="background-color: rgba(7, 10, 10, 0.6);" class="material-icons">add</i></a>
+					    </li>
+					    {% endfor %}
+					</ul>
+				</div>
+			</div>
 		</div>
-	</div>
+	</section>
 {% endblock%}

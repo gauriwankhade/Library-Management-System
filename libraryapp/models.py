@@ -11,7 +11,7 @@ class Member(AbstractUser):
     email           = models.EmailField(unique=True)
     first_name      = models.CharField(max_length=30)
     last_name       = models.CharField(max_length=30)
-    is_student      = models.BooleanField(default=True)
+    member_type     = models.CharField(default='student',max_length=30)
 
     class Meta:
         verbose_name = _("Member")
@@ -46,12 +46,12 @@ class Author(models.Model):
         ordering = ['surname']
 
 class Book(models.Model):
+    choices = (('Available','Available'),('NA','Not available'))
     title = models.CharField(max_length=100)
     isbn = models.CharField(max_length=20)
-    cover = models.ImageField(upload_to='book_cover', default='download.png')
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="books")
-    categories = models.ManyToManyField(Category)
-    status = models.CharField(max_length=55)
+    categories = models.ForeignKey(Category,on_delete=models.CASCADE)
+    status = models.CharField(max_length=55,choices=choices,default='Available')
     
     def __str__(self):
         return self.title

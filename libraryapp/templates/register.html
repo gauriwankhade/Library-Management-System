@@ -20,7 +20,20 @@
 					<h3>Sign Up</h3>
 					<form class="form" method="POST">
 						{% csrf_token %}
-						{{ form.as_p }}
+						<input placeholder="Username" type="text" name="username" required>	
+						<input placeholder="Password" type="password" name="password" required>	
+						<input placeholder="First Name" type="text" name="first_name" required>	
+						<input placeholder="Last Name" type="text" name="last_name" required>	
+						<input placeholder="Email" type="email" name="email" required>
+						<div class="input-field">
+							<label for="member_type"></label>
+							<select name="member_type" id="member_type">
+							  <option value="" disabled selected>Who is logging in?</option>
+							  <option value="student">Student</option>
+							  <option value="librarian">Librarian</option>
+							</select>
+						</div>
+
 						<input class="btn " type="submit" name="register">
 					</form>
 					<p>Already Member? 

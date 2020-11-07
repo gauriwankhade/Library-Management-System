@@ -2,7 +2,9 @@
   font-family: "Montserrat-SemiBold";
   src: url("../fonts/montserrat/Montserrat-SemiBold.ttf"); }
 
-
+body{
+	font-family: 'Roboto', sans-serif !important;
+}
 
 
 .box-element{
@@ -18,5 +20,5 @@
  	background-color: #fff;
  	border-radius: 4px;
  	padding: 10px;
-
+ 	min-width: 60%;
  }

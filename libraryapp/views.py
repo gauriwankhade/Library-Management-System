@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect,HttpResponse
-from .models import Member
-from .forms import RegisterForm
+from .models import Member,IssueRequest,Book
+
 from django.contrib.auth.hashers  import make_password, check_password 
 from django.contrib.auth import login,logout
 
@@ -9,43 +9,48 @@ from django.contrib.auth import login,logout
 
 
 def homeView(request):
-	return render(request,'index.html')
+	books= Book.objects.filter(status='Available')
+	return render(request,'index.html',{'books':books})
 
 
 def dashboardView(request):
-	student = Member.objects.get(request.session['member_id'])
-	return render(request,'dashboard.html')
+	student = Member.objects.get(pk=request.session['member_id'])
+	books = IssueRequest.objects.filter(member=student)
+	context = {
+		'books':books,
+		'student':student
+	}
+
+	return render(request,'dashboard.html',context)
 
 def librarianView(request):
-	librarian = Member.objects.get(request.session['member_id'])
+	librarian = Member.objects.get(pk=request.session['member_id'])
 	return render(request,'librarian.html')
 
 def registerView(request):
-	if request.method =='POST' :
-		form = RegisterForm(request.POST)
-		if form.is_valid() :
-			username = request.POST['username']
-			email	 = request.POST['email']
-			first_name = request.POST['first_name']
-			last_name = request.POST['last_name']
-			is_student = request.POST['is_student']
-			password = make_password(request.POST['password'], salt=None, hasher='default')
-			
-			user = Member(username=username,password=password,first_name=first_name,last_name=last_name,email=email,is_student=is_student)
-			user.save()
+	if request.method =='POST' :		
+		username = request.POST.get('username')
+		email	 = request.POST.get('email')
+		first_name = request.POST.get('first_name')
+		last_name = request.POST.get('last_name')
+		member_type = request.POST.get('member_type')
+		password = make_password(request.POST.get('password'), salt=None, hasher='default')
+		user = Member(username=username,password=password,first_name=first_name,last_name=last_name,email=email,member_type=member_type)
+		user.save()
+		print(request.POST)
 
-			login(request,user)
-			request.session['member_id']= user.id
+		login(request,user)
+		request.session['member_id']= user.id
 
-			if is_student:
-				return HttpResponseRedirect('student/dashboard')
-			else:
-				return HttpResponseRedirect('library/dashboard')
-	else:
-		form=RegisterForm()
+		if member_type=='student':
+			return HttpResponseRedirect('student/dashboard')
+		else:
+			return HttpResponseRedirect('library/dashboard')
+	
+	return render(request,'register.html')
 
-	context = {
-			'form' : form
-	}
 
-	return render(request,'register.html',context)
+
+
+
+
