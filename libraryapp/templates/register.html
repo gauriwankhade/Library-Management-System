@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+{% endblock%}
+
+{% block title%} Register {% endblock%}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<!-- <div class="col s6">
+				<img class="responsive-img" src="{% static 'images/reg.jpg' %}">
+			</div> -->
+
+			<div class="col s6">
+				<div class="form-body">
+					<h3>Sign Up</h3>
+					<form class="form" method="POST">
+						{% csrf_token %}
+						{{ form.as_p }}
+						<input class="btn " type="submit" name="register">
+					</form>
+					<p>Already Member? 
+						<a href="#">Login</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock%}

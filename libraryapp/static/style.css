@@ -1,0 +1,22 @@
+@font-face {
+  font-family: "Montserrat-SemiBold";
+  src: url("../fonts/montserrat/Montserrat-SemiBold.ttf"); }
+
+
+
+
+.box-element{
+ 	background-color: rgba(7, 10, 10, 0.6) ;
+ 	border-radius: 4px;
+ 	padding: 20px;
+ 	font-family: "ElMessiri-SemiBold";
+ }
+
+
+ .box-element-1{
+ 	box-shadow: hsl(0,0%,80%) 0 0 16px;
+ 	background-color: #fff;
+ 	border-radius: 4px;
+ 	padding: 10px;
+
+ }
